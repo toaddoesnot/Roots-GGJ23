@@ -11,6 +11,15 @@ public class CameraZoom : MonoBehaviour
     float cameraDistance;
     [SerializeField] float sensitivity = 10f;
 
+    public Transform holyL;
+    public Transform holyM;
+    public Transform holyR;
+
+    public void Start()
+    {
+        virtualCamera.LookAt = holyM;
+        virtualCamera.Follow = holyM;
+    }
 
     // Update is called once per frame
     void Update()
