@@ -22,7 +22,7 @@ public class Obstacle : MonoBehaviour
             }
             else
             {
-                inside.teleported = false;
+                //inside.teleported = false;
             }
         }
 
@@ -31,7 +31,7 @@ public class Obstacle : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "drag")
+        if (other.tag == "itemM" || other.tag == "itemL" || other.tag == "itemR")
         {
             inside = other.GetComponent<InteractableObj>();
             colliding = true;
