@@ -8,9 +8,13 @@ public class InteractableObj : MonoBehaviour
     private float mZCoord;
 
     public bool teleported;
+    public bool teleportFin;
+
     public GameObject teleportSpot;
 
     private Rigidbody rb;
+
+    //public float r_XAxis, r_YAxis, r_ZAxis;
 
     void Start()
     {
@@ -22,8 +26,12 @@ public class InteractableObj : MonoBehaviour
         if (teleported)
         {
             this.transform.position = teleportSpot.transform.position;
-            
-            //teleported = false;
+            if(teleportFin is false)
+            {
+                teleported = false;
+                StartCoroutine("FinTeleport");
+                teleportFin = true;
+            }
         }
     }
 
@@ -46,18 +54,14 @@ public class InteractableObj : MonoBehaviour
         transform.position = GetMouseWorldPos() + mOffset;
     }
 
-    private void OnMouseUp()
+    public void ChangePosition()
     {
-        
+        //transform.position = new Vector3(r_XAxis, r_YAxis, r_ZAxis);
     }
 
-    private void OnMouseEnter()
+    public IEnumerator FinTeleport()
     {
-        print("I'm in");
-    }
-
-    private void OnMouseExit()
-    {
-        
+        yield return 1f;
+        teleportFin = false;
     }
 }
