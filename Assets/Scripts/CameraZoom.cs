@@ -10,25 +10,40 @@ public class CameraZoom : MonoBehaviour
     CinemachineComponentBase componentBase;
     float cameraDistance;
     [SerializeField] float sensitivity = 10f;
+    public CameraSwitcher switchSc;
 
-    public Transform holyL;
-    public Transform holyM;
-    public Transform holyR;
+    public GameObject[] vcams;
+    public bool DoOnce;
 
     public void Start()
     {
-        virtualCamera.LookAt = holyM;
-        virtualCamera.Follow = holyM;
+        
+        //virtualCamera.LookAt = holyM;
+        //virtualCamera.Follow = holyM;
     }
 
     // Update is called once per frame
     void Update()
     {
+        virtualCamera = vcams[switchSc.cameraNum].GetComponent<CinemachineVirtualCamera>();
+
         if (componentBase == null)
         {
             componentBase = virtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
             maxCameraDistance = (componentBase as CinemachineFramingTransposer).m_CameraDistance;
         }
+        
+        if (DoOnce is true)
+        {
+            componentBase = virtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
+            maxCameraDistance = (componentBase as CinemachineFramingTransposer).m_CameraDistance;
+            DoOnce = false;
+        }
+        {
+            //componentBase = virtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
+            //maxCameraDistance = (componentBase as CinemachineFramingTransposer).m_CameraDistance;
+        }
+       
 
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
