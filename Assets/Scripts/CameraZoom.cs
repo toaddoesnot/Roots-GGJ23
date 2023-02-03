@@ -39,10 +39,6 @@ public class CameraZoom : MonoBehaviour
             maxCameraDistance = (componentBase as CinemachineFramingTransposer).m_CameraDistance;
             DoOnce = false;
         }
-        {
-            //componentBase = virtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
-            //maxCameraDistance = (componentBase as CinemachineFramingTransposer).m_CameraDistance;
-        }
        
 
         if (Input.GetAxis("Mouse ScrollWheel") != 0)

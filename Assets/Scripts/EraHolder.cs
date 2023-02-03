@@ -21,24 +21,46 @@ public class EraHolder : MonoBehaviour
     public int DeadSpot3;
     public int ExtraDeath;
 
-    
+    public Riddles ridSc;
+    public bool locked;
+    public GameObject ALock;
+    public GameObject blocker;
 
     void Update()
     {
+        if (locked)
+        {
+            ALock.SetActive(true);
+        }
+        else
+        {
+            ALock.SetActive(false);
+        }
+
         foreach(GameObject era in eras)
         {
             era.SetActive(false);
             eras[currentEra].SetActive(true);
         }
+
+        if (currentEra is 2)
+        {
+            blocker.SetActive(true);
+        }
+        else
+        {
+            blocker.SetActive(false);
+        }
+
     }
 
     public void TimeTo()
     {
-        anim.Play("RightRotation");
-
-        StartCoroutine("ChangerTo");
-
-
+        if(locked is false)
+        {
+            anim.Play("RightRotation");
+            StartCoroutine("ChangerTo");
+        }
     }
 
     public IEnumerator ChangerTo()
@@ -80,9 +102,13 @@ public class EraHolder : MonoBehaviour
 
     public void TimeBack()
     {
-        anim.Play("LeftRotation");
+        if (locked is false)
+        {
+            anim.Play("LeftRotation");
 
-        StartCoroutine("ChangerBack");
+            StartCoroutine("ChangerBack");
+        }
+            
 
     }
 
@@ -93,21 +119,18 @@ public class EraHolder : MonoBehaviour
         if (currentEra is 0)
         {
             currentEra = 2;
-            influCube.SetActive(true);
         }
         else
         {
             if (currentEra is 1)
             {
                 currentEra = 0;
-                influCube.SetActive(true);
             }
             else
             {
                 if (currentEra is 2)
                 {
                     currentEra = 1;
-                    influCube.SetActive(true);
                 }
             }
         }
