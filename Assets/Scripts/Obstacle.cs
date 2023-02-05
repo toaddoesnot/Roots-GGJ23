@@ -7,10 +7,6 @@ public class Obstacle : MonoBehaviour
     public bool colliding;
     public InteractableObj inside;
 
-    public void Start()
-    {
-        
-    }
 
     public void Update()
     {
@@ -19,6 +15,7 @@ public class Obstacle : MonoBehaviour
             if (colliding)
             {
                 inside.teleported = true;
+                inside.holding = false;
             }
             else
             {
@@ -31,7 +28,7 @@ public class Obstacle : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "itemM" || other.tag == "itemL" || other.tag == "itemR")
+        if (other.tag == "itemM" || other.tag == "itemL" || other.tag == "itemR" || other.tag == "itemL2")
         {
             inside = other.GetComponent<InteractableObj>();
             colliding = true;

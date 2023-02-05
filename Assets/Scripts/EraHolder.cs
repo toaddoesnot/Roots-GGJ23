@@ -13,18 +13,17 @@ public class EraHolder : MonoBehaviour
     public float RotationSpeed = 4f;
 
     public Animation anim;
-
-    public GameObject[] colliders; //if collider[1].GetComponent<script>().slot full is true then influcube is not active
     public GameObject influCube;
-    public int DeadSpot1;
-    public int DeadSpot2;
-    public int DeadSpot3;
-    public int ExtraDeath;
 
     public Riddles ridSc;
     public bool locked;
     public GameObject ALock;
     public GameObject blocker;
+
+    public bool resetEd;
+    public EraManager eraSc;
+    public GameObject floorCollider;
+
 
     void Update()
     {
@@ -52,11 +51,22 @@ public class EraHolder : MonoBehaviour
             blocker.SetActive(false);
         }
 
+        if (ridSc.neutralEra is 0)
+        {
+            if(resetEd is false)
+            {
+                StartCoroutine("Reset");
+                resetEd = true;
+            }
+        }
+
     }
 
     public void TimeTo()
     {
-        if(locked is false)
+        ridSc.butsActive = false;
+
+        if (locked is false)
         {
             anim.Play("RightRotation");
             StartCoroutine("ChangerTo");
@@ -66,42 +76,34 @@ public class EraHolder : MonoBehaviour
     public IEnumerator ChangerTo()
     {
         yield return new WaitForSeconds(0.75f);
+        ridSc.butsActive = true;
 
         if (currentEra is 0)
         {
             currentEra = 1;
-            if (colliders[DeadSpot1].GetComponent<Snapper>().slotFull)
-            {
-                influCube.SetActive(false);
-            }
         }
         else
         {
             if (currentEra is 1)
             {
                 currentEra = 2;
-                if (colliders[DeadSpot2].GetComponent<Snapper>().slotFull || colliders[ExtraDeath].GetComponent<Snapper>().slotFull)
-                {
-                    influCube.SetActive(false);
-                }
-
             }
             else
             {
                 if (currentEra is 2)
                 {
                     currentEra = 0;
-                    if (colliders[DeadSpot3].GetComponent<Snapper>().slotFull)
-                    {
-                        influCube.SetActive(false);
-                    }
                 }
             }
         }
+
+        
     }
 
     public void TimeBack()
     {
+        ridSc.butsActive = false;
+
         if (locked is false)
         {
             anim.Play("LeftRotation");
@@ -109,12 +111,13 @@ public class EraHolder : MonoBehaviour
             StartCoroutine("ChangerBack");
         }
             
-
+         
     }
 
     public IEnumerator ChangerBack()
     {
         yield return new WaitForSeconds(0.75f);
+        ridSc.butsActive = true;
 
         if (currentEra is 0)
         {
@@ -134,8 +137,16 @@ public class EraHolder : MonoBehaviour
                 }
             }
         }
+
+        
     }
 
-    
+    public IEnumerator Reset()
+    {
+        yield return new WaitForSeconds(0.75f);
+        influCube.SetActive(true);
+        eraSc.TV.SetActive(true);
+        resetEd = false;
+    }
 
 }
