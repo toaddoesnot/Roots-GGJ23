@@ -364,6 +364,9 @@ MonoBehaviour:
   winText: {fileID: 891729146}
   buttons: {fileID: 781158474}
   lastIsBack: 0
+  firWin: 0
+  sndWin: 0
+  thrdWin: 0
 --- !u!4 &108217580
 Transform:
   m_ObjectHideFlags: 0
@@ -421,6 +424,8 @@ MonoBehaviour:
   backBut: {fileID: 266595249}
   toBut: {fileID: 1306165679}
   butsActive: 1
+  referenceRoom: {fileID: 1583499653}
+  managerSc: {fileID: 108217579}
 --- !u!114 &108217583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3556,7 +3561,7 @@ GameObject:
   - component: {fileID: 858495768}
   - component: {fileID: 858495767}
   m_Layer: 0
-  m_Name: cup
+  m_Name: TEAPOT
   m_TagString: itemM
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5756,7 +5761,7 @@ GameObject:
   - component: {fileID: 1179824358}
   - component: {fileID: 1179824357}
   m_Layer: 0
-  m_Name: TV
+  m_Name: HORN
   m_TagString: itemL2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9126,7 +9131,7 @@ GameObject:
   - component: {fileID: 1991539254}
   - component: {fileID: 1991539253}
   m_Layer: 0
-  m_Name: cup
+  m_Name: HAT
   m_TagString: itemL
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
