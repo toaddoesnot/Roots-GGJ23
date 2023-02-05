@@ -61,6 +61,7 @@ public class EraManager : MonoBehaviour
         {
             rooms[1].GetComponent<EraHolder>().locked = true;
             winText.SetActive(true);
+            StartCoroutine("Replay");
             buttons.SetActive(false);
         }
     }
@@ -215,7 +216,15 @@ public class EraManager : MonoBehaviour
         rooms[0].GetComponent<EraHolder>().influCube.SetActive(true);
         rooms[1].GetComponent<EraHolder>().influCube.SetActive(true);
         rooms[2].GetComponent<EraHolder>().influCube.SetActive(true);
-        TV.SetActive(true);
+
+        if (ridSc.neutralEra > 0)
+        {
+            TV.SetActive(true);
+        }
+        else
+        {
+            TV.SetActive(false);
+        }
     }
 
     public IEnumerator OBack()
@@ -225,8 +234,9 @@ public class EraManager : MonoBehaviour
         rooms[1].GetComponent<EraHolder>().influCube.SetActive(true);
     }
 
-    public void Replay()
+    public IEnumerator Replay()
     {
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(0);
     }
 }
