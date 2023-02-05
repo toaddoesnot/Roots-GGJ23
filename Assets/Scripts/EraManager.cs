@@ -20,6 +20,10 @@ public class EraManager : MonoBehaviour
     public GameObject buttons;
     public bool lastIsBack;
 
+    public bool firWin;
+    public bool sndWin;
+    public bool thrdWin;
+
 
     public void Update()
     {
@@ -74,11 +78,14 @@ public class EraManager : MonoBehaviour
         if (rooms[2].GetComponent<EraHolder>().currentEra is 2)
         {
             StartCoroutine("LineOne");
+            
+            //print("HERE");
         }
 
         if (rooms[2].GetComponent<EraHolder>().currentEra is 0) 
         {
             StartCoroutine("LineTwo");
+            
         }
 
         if (rooms[2].GetComponent<EraHolder>().currentEra is 1)
@@ -109,6 +116,16 @@ public class EraManager : MonoBehaviour
             rooms[0].GetComponent<EraHolder>().locked = false;
             rooms[0].GetComponent<EraHolder>().anim.Play("LeftRotation");
             rooms[0].GetComponent<EraHolder>().StartCoroutine("ChangerBack");
+            
+            
+        }
+
+        if (rooms[1].GetComponent<EraHolder>().currentEra is 0)
+        {
+            if (firWin)
+            {
+                StartCoroutine("TVBack");
+            }
         }
 
 
@@ -122,6 +139,7 @@ public class EraManager : MonoBehaviour
         if (rooms[0].GetComponent<EraHolder>().currentEra is 1)
         {
             StartCoroutine("TVBack");
+            
         }
 
         if (rooms[1].GetComponent<EraHolder>().currentEra is 1 || rooms[1].GetComponent<EraHolder>().currentEra is 2)
@@ -137,6 +155,11 @@ public class EraManager : MonoBehaviour
         if (X1Collider.GetComponent<Snapper>().slotFull is false)
         {
             rooms[0].GetComponent<EraHolder>().influCube.SetActive(false);
+        }
+
+        if (rooms[1].GetComponent<EraHolder>().influCube.activeInHierarchy && rooms[0].GetComponent<EraHolder>().influCube.activeInHierarchy)
+        {
+            firWin = true;
         }
 
     }
@@ -157,6 +180,11 @@ public class EraManager : MonoBehaviour
         if (LCollider.GetComponent<Snapper>().slotFull is true || LFloor.GetComponent<Snapper>().slotFull is true)
         {
             TV.SetActive(false);
+        }
+
+        if (rooms[1].GetComponent<EraHolder>().influCube.activeInHierarchy && rooms[0].GetComponent<EraHolder>().influCube.activeInHierarchy && TV.activeInHierarchy)
+        {
+            sndWin = true;
         }
     }
 
