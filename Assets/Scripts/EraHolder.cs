@@ -145,7 +145,16 @@ public class EraHolder : MonoBehaviour
     {
         yield return new WaitForSeconds(0.75f);
         influCube.SetActive(true);
-        eraSc.TV.SetActive(true);
+
+        if(ridSc.neutralEra > 0)
+        {
+            eraSc.TV.SetActive(true);
+        }
+        else
+        {
+            eraSc.TV.SetActive(false);
+        }
+        
         resetEd = false;
     }
 
