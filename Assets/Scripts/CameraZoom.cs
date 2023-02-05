@@ -13,6 +13,7 @@ public class CameraZoom : MonoBehaviour
     public CameraSwitcher switchSc;
 
     public GameObject[] vcams;
+    public GameObject activeCamera;
     public bool DoOnce;
 
     public void Start()
@@ -26,6 +27,7 @@ public class CameraZoom : MonoBehaviour
     void Update()
     {
         virtualCamera = vcams[switchSc.cameraNum].GetComponent<CinemachineVirtualCamera>();
+        activeCamera = vcams[switchSc.cameraNum];
 
         if (componentBase == null)
         {

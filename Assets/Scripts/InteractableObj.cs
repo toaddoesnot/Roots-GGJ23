@@ -13,6 +13,7 @@ public class InteractableObj : MonoBehaviour
     public GameObject teleportSpot;
 
     private Rigidbody rb;
+    public bool holding;
 
     //public float r_XAxis, r_YAxis, r_ZAxis;
 
@@ -37,7 +38,7 @@ public class InteractableObj : MonoBehaviour
 
     private void OnMouseDown()
     {
-        
+        holding = true;
         mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         mOffset = gameObject.transform.position - GetMouseWorldPos();
     }
@@ -51,7 +52,11 @@ public class InteractableObj : MonoBehaviour
 
     void OnMouseDrag()
     {
-        transform.position = GetMouseWorldPos() + mOffset;
+        if (holding)
+        {
+            transform.position = GetMouseWorldPos() + mOffset;
+        }
+        
     }
 
     public void ChangePosition()

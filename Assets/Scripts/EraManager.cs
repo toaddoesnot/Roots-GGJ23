@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EraManager : MonoBehaviour
 {
@@ -9,11 +10,16 @@ public class EraManager : MonoBehaviour
     public GameObject LCollider;
     public GameObject XCollider;
     public GameObject OCollider;
+    public GameObject X1Collider;
+    public GameObject LFloor;
 
     public GameObject TV;
     public Riddles ridSc;
 
     public GameObject winText;
+    public GameObject buttons;
+    public bool lastIsBack;
+
 
     public void Update()
     {
@@ -21,7 +27,7 @@ public class EraManager : MonoBehaviour
         {
             if (rooms[0].GetComponent<EraHolder>().influCube.activeInHierarchy)
             {
-                if (TV.activeInHierarchy)
+                if (TV.activeInHierarchy && rooms[0].GetComponent<EraHolder>().locked is false  && lastIsBack is false || TV.activeInHierarchy && rooms[0].GetComponent<EraHolder>().locked is true)
                 {
                     rooms[0].GetComponent<EraHolder>().locked = true;
                 }
@@ -40,8 +46,6 @@ public class EraManager : MonoBehaviour
                 {
                     rooms[2].GetComponent<EraHolder>().locked = true;
                 }
-                //rooms[1].GetComponent<EraHolder>().locked = true;
-                
             }
         }
         else
@@ -53,19 +57,23 @@ public class EraManager : MonoBehaviour
         {
             rooms[1].GetComponent<EraHolder>().locked = true;
             winText.SetActive(true);
+            buttons.SetActive(false);
         }
-
-
-        // if spot is occupied its bad
-        // if the one is not occupied its dead
     }
 
     public void ButtonTo()
     {
         ridSc.neutralEra++;
+        lastIsBack = false;
+
         foreach (GameObject room in rooms)
         {
             room.GetComponent<EraHolder>().TimeTo();
+        }
+
+        if (rooms[2].GetComponent<EraHolder>().currentEra is 2)
+        {
+            StartCoroutine("LineOne");
         }
 
         if (rooms[2].GetComponent<EraHolder>().currentEra is 0) 
@@ -89,7 +97,8 @@ public class EraManager : MonoBehaviour
     public void ButtonBack()
     {
         ridSc.neutralEra--;
-        
+        lastIsBack = true;
+
         foreach (GameObject room in rooms)
         {
             room.GetComponent<EraHolder>().TimeBack();
@@ -119,9 +128,19 @@ public class EraManager : MonoBehaviour
         {
             StartCoroutine("OBack");
         }
-
-            
     }
+
+    public IEnumerator LineOne()
+    {
+        yield return new WaitForSeconds(0.75f);
+
+        if (X1Collider.GetComponent<Snapper>().slotFull is false)
+        {
+            rooms[0].GetComponent<EraHolder>().influCube.SetActive(false);
+        }
+
+    }
+
 
     public IEnumerator LineTwo()
     {
@@ -133,9 +152,9 @@ public class EraManager : MonoBehaviour
         }
         if (rooms[0].GetComponent<EraHolder>().influCube.activeInHierarchy is false)
         {
-            rooms[1].GetComponent<EraHolder>().influCube.SetActive(false);
+            //rooms[1].GetComponent<EraHolder>().influCube.SetActive(false); - fallacy
         }
-        if (LCollider.GetComponent<Snapper>().slotFull is true)
+        if (LCollider.GetComponent<Snapper>().slotFull is true || LFloor.GetComponent<Snapper>().slotFull is true)
         {
             TV.SetActive(false);
         }
@@ -176,5 +195,10 @@ public class EraManager : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
 
         rooms[1].GetComponent<EraHolder>().influCube.SetActive(true);
+    }
+
+    public void Replay()
+    {
+        SceneManager.LoadScene(0);
     }
 }

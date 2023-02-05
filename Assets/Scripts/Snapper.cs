@@ -9,20 +9,10 @@ public class Snapper : MonoBehaviour
     public string tagSt;
     public string wrongTag1;
     public string wrongTag2;
+    public string wrongTag3;
 
-    //public float m_XAxis, m_YAxis, m_ZAxis;
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == tagSt)
-        {
-            //other.GetComponent<InteractableObj>().r_XAxis = m_XAxis;
-            //other.GetComponent<InteractableObj>().r_YAxis = m_YAxis;
-            //other.GetComponent<InteractableObj>().r_ZAxis = m_ZAxis;
-
-            //other.GetComponent<InteractableObj>().ChangePosition();
-        }
-    }
+    //public InteractableObj impostor;
+    //public bool colliding;
 
     public void OnTriggerStay(Collider other)
     {
@@ -30,9 +20,11 @@ public class Snapper : MonoBehaviour
         {
             slotFull = true;
         }
-        if (other.gameObject.tag == wrongTag1 || other.gameObject.tag == wrongTag2)
+        
+        if (other.gameObject.tag == wrongTag1 || other.gameObject.tag == wrongTag2 || other.gameObject.tag == wrongTag3)
         {
             other.GetComponent<InteractableObj>().teleported = true;
+            other.GetComponent<InteractableObj>().holding = false;
         }
     }
 
